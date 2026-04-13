@@ -201,13 +201,15 @@ body {
   z-index: 20;
   text-align: center;
   width: 460px;
+  pointer-events: none;
+  color: #fff;
   font-family: 'Source Serif 4', serif;
   font-size: 16px;
-  line-height: 1.7;
-  color: var(--fg);
-  opacity: 0.6;
   font-style: normal;
-  pointer-events: none;
+  font-weight: 300;
+  line-height: 150%;
+  letter-spacing: -0.16px;
+  font-feature-settings: 'dlig' on, 'salt' on;
 }
 
 /* ─── ART FRAME IMAGES ─── */
