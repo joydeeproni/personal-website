@@ -37,27 +37,24 @@ if (main && sections.length) {
    SUBTLE PARALLAX ON ART FRAMES
    ───────────────────────────────────────────── */
 
-const frames = document.querySelectorAll('.browser-frame');
+const frames = document.querySelectorAll('.art-frame');
+
+// Read base rotations from computed styles (set via CSS class)
+const baseRots = [[-1],[2.5],[0.4],[-1.4],[1.8],[-2],[1]];
 
 document.addEventListener('mousemove', (e) => {
   const cx = window.innerWidth  / 2;
   const cy = window.innerHeight / 2;
-  const dx = (e.clientX - cx) / cx; // -1 to +1
+  const dx = (e.clientX - cx) / cx;
   const dy = (e.clientY - cy) / cy;
 
   frames.forEach((frame, i) => {
-    const depth = 0.4 + (i % 3) * 0.25; // different depths
-    const tx = dx * 6 * depth;
-    const ty = dy * 4 * depth;
-    const baseRot = parseFloat(frame.style.getPropertyValue('--base-rot') || 0);
-    frame.style.transform = `rotate(${baseRot}deg) translate(${tx}px, ${ty}px)`;
+    const depth = 0.35 + (i % 3) * 0.2;
+    const tx = dx * 7 * depth;
+    const ty = dy * 5 * depth;
+    const rot = baseRots[i] ? baseRots[i][0] : 0;
+    frame.style.transform = `rotate(${rot}deg) translate(${tx}px, ${ty}px)`;
   });
-});
-
-// Store base rotations
-frames.forEach(frame => {
-  const match = frame.style.transform?.match(/rotate\(([^)]+)deg\)/);
-  if (match) frame.style.setProperty('--base-rot', match[1]);
 });
 
 /* ─────────────────────────────────────────────
