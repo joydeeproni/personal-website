@@ -3,32 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Article — Joy S</title>
+  <title>Article — Joy S.</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <canvas id="pixelCanvas"></canvas>
-
-  <header>
-    <div class="header-title">This is not a portfolio</div>
-    <div class="header-circle"></div>
+  <header class="site-header">
+    <a href="index.html" class="logo-badge">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="4" y="19" font-size="14" font-family="serif" fill="#111" font-style="italic">JS</text>
+      </svg>
+    </a>
   </header>
 
-  <nav class="left-nav">
-    <a href="index.html" class="nav-item">Values</a>
-    <a href="#" class="nav-item">Contact</a>
-    <a href="#" class="nav-item">Work</a>
-    <a href="blog.html" class="nav-item active">Thoughts</a>
-    <a href="#" class="nav-item">Ones</a>
+  <div class="tab-deco" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </div>
+
+  <nav class="page-left-nav">
+    <a href="index.html" class="page-nav-item">Home</a>
+    <a href="blog.html" class="page-nav-item active">Thoughts</a>
   </nav>
 
-  <main class="article-main">
-    <a href="blog.html" class="article-back">← Back to thoughts</a>
-    <h1 class="article-title" id="articleTitle">Loading…</h1>
-    <div class="article-meta" id="articleMeta"></div>
+  <div class="article-wrap">
+    <a href="blog.html" class="article-back">← All thoughts</a>
+    <h1 class="article-title" id="articleTitle"></h1>
+    <div class="article-date" id="articleDate"></div>
     <div class="article-body" id="articleBody"></div>
-  </main>
+  </div>
 
   <script>
     const articles = {
@@ -38,7 +40,7 @@
         body: `<p>There's a comfortable lie that floats around design circles: that knowing how to code is optional. A nice-to-have. A bonus. It isn't.</p>
         <p>I'm not saying every designer needs to ship production React. But understanding what's hard, what's easy, what costs three hours versus three minutes — that knowledge changes every conversation you have with an engineer.</p>
         <p>The moment I understood the DOM was the moment I stopped designing things that were technically beautiful and practically impossible. Not because engineers are lazy. Because I was asking for things that required restructuring the entire component tree to accommodate a two-pixel visual preference.</p>
-        <p>Code literacy isn't about writing code. It's about designing with the grain of the material. Wood workers understand wood. Designers should understand software.</p>`
+        <p>Code literacy isn't about writing code. It's about designing with the grain of the material.</p>`
       },
       2: {
         title: "On being wrong loudly and often",
@@ -53,8 +55,7 @@
         date: "January 2026",
         body: `<p>I'm going to describe a pattern and you tell me if you recognize it. Someone complains about a problem — a process friction, a communication breakdown, an inefficiency — and when you ask if they've tried the tool that solves exactly that problem, they say: "Oh I've heard of it, I just haven't had time to learn it."</p>
         <p>This person has had time to complain. They have not had time to fix the thing they're complaining about. I find this baffling.</p>
-        <p>Tools I actually use, in no particular order: Raycast, Notion, Figma (obviously), Linear, and an embarrassingly long list of browser extensions that have collectively saved me weeks.</p>
-        <p>None of these took more than an afternoon to learn at a useful level. That is the bar. An afternoon.</p>`
+        <p>None of the tools I rely on took more than an afternoon to learn at a useful level. That is the bar. An afternoon.</p>`
       },
       4: {
         title: "The dinner party problem: unsolicited design critique",
@@ -67,7 +68,7 @@
         title: 'Why "ship it" is both good and terrible advice',
         date: "November 2025",
         body: `<p>"Ship it" is good advice when the problem is paralysis. When the team has been refining the same design for six weeks, when every conversation reopens already-closed decisions, when perfect has become the enemy of done — yes. Ship it.</p>
-        <p>"Ship it" is terrible advice when the problem is that the thing you're about to ship is wrong. Not imperfect. Wrong. Wrong premise, wrong user, wrong problem solved entirely.</p>
+        <p>"Ship it" is terrible advice when the thing you're about to ship is wrong. Not imperfect. Wrong. Wrong premise, wrong user, wrong problem solved entirely.</p>
         <p>The hard part is telling the difference. That distinction is most of the job.</p>`
       },
       6: {
@@ -75,39 +76,37 @@
         date: "October 2025",
         body: `<p>A good therapist doesn't tell you what to feel. They ask questions until you tell yourself. A good designer doesn't tell users what they want. They create conditions where users can show you.</p>
         <p>Both disciplines require sitting with discomfort. Not jumping to solutions. Resisting the urge to fix before you understand.</p>
-        <p>I'm not saying designers are therapists. I'm saying the cognitive posture is surprisingly similar, and that the designers I've learned most from all had a quality of patient, non-judgmental attention that I associate more with good listeners than good makers.</p>`
+        <p>I'm not saying designers are therapists. I'm saying the cognitive posture is surprisingly similar.</p>`
       },
       7: {
         title: "Against vibes-based roadmaps",
         date: "September 2025",
         body: `<p>A vibes-based roadmap is one where the prioritization logic, if you trace it back far enough, ends at "the founder really cares about this" or "we've been talking about it for a while so it feels important."</p>
-        <p>These roadmaps are more common than anyone admits. They get dressed up in the language of strategy — "customer-centric," "high impact," "aligns with our north star" — but the actual inputs are vibes.</p>
-        <p>The fix isn't more process. It's one honest question per roadmap item: what would convince us this is the wrong thing to build right now? If nobody can answer that, the item isn't prioritized. It's assumed.</p>`
+        <p>These roadmaps are more common than anyone admits. They get dressed up in the language of strategy but the actual inputs are vibes.</p>
+        <p>The fix is one honest question per roadmap item: what would convince us this is the wrong thing to build right now? If nobody can answer that, the item isn't prioritized. It's assumed.</p>`
       },
       8: {
         title: "Self-awareness as a design skill",
         date: "August 2025",
-        body: `<p>The designers I've seen do the most damage — to products, to teams, to user experiences — were not the ones who lacked skills. They were the ones who lacked self-awareness about where their instincts were reliable and where they weren't.</p>
+        body: `<p>The designers I've seen do the most damage were not the ones who lacked skills. They were the ones who lacked self-awareness about where their instincts were reliable and where they weren't.</p>
         <p>Everyone has design opinions. The difference between an opinion and a skill is being able to say "I don't know if I'm right about this, let's test it" and meaning it.</p>
-        <p>Self-awareness in design isn't humility for its own sake. It's precision. Knowing when to trust your gut and when to distrust it is what separates expensive mistakes from cheap ones.</p>`
+        <p>Self-awareness in design isn't humility for its own sake. It's precision.</p>`
       },
       9: {
         title: "The myth of the objective user",
         date: "July 2025",
-        body: `<p>There is no objective user. There is no view from nowhere. Every research method selects for certain kinds of people, certain kinds of contexts, certain kinds of feedback. The results are always partial.</p>
+        body: `<p>There is no objective user. There is no view from nowhere. Every research method selects for certain kinds of people, certain kinds of contexts, certain kinds of feedback.</p>
         <p>This doesn't mean user research is useless. It means treating any single study as definitive is the mistake. You're collecting evidence, not discovering truth.</p>
-        <p>The practical implication: when someone says "users want X" based on one round of interviews, the right question is always "which users, in what context, saying what, to whom?" The answer to that question is where the actual information is.</p>`
+        <p>The practical implication: when someone says "users want X" based on one round of interviews, the right question is always "which users, in what context, saying what, to whom?"</p>`
       }
     };
 
-    const params = new URLSearchParams(window.location.search);
-    const id = params.get('id') || '1';
-    const article = articles[id] || articles[1];
-
-    document.getElementById('articleTitle').textContent = article.title;
-    document.getElementById('articleMeta').textContent = article.date;
-    document.getElementById('articleBody').innerHTML = article.body;
-    document.title = article.title + ' — Joy S';
+    const id = new URLSearchParams(window.location.search).get('id') || '1';
+    const a = articles[id] || articles[1];
+    document.getElementById('articleTitle').textContent = a.title;
+    document.getElementById('articleDate').textContent = a.date;
+    document.getElementById('articleBody').innerHTML = a.body;
+    document.title = a.title + ' — Joy S.';
   </script>
   <script src="script.js"></script>
 </body>

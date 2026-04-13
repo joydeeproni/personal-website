@@ -3,33 +3,174 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Joy S — This is not a portfolio</title>
+  <title>Joy S.</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <canvas id="pixelCanvas"></canvas>
-
-  <header>
-    <div class="header-title">This is not a portfolio</div>
-    <div class="header-circle"></div>
+  <!-- Logo -->
+  <header class="site-header">
+    <div class="logo-badge">
+      <!-- simple signature mark -->
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="4" y="19" font-size="14" font-family="serif" fill="#111" font-style="italic">JS</text>
+      </svg>
+    </div>
   </header>
 
-  <nav class="left-nav">
-    <a href="index.html" class="nav-item active">Values</a>
-    <a href="#" class="nav-item">Contact</a>
-    <a href="#" class="nav-item">Work</a>
-    <a href="blog.html" class="nav-item">Thoughts</a>
-    <a href="#" class="nav-item">Ones</a>
+  <!-- browser-tab decoration -->
+  <div class="tab-deco" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </div>
+
+  <!-- Timeline nav -->
+  <nav class="timeline-nav" id="timelineNav">
+    <div class="era-entry active" data-target="now">
+      <span class="era-label-tag">Now</span>
+      <span class="era-tick"></span>
+    </div>
+    <div class="era-entry" data-target="spring-2026">
+      <span class="era-label-tag">Spring 2026</span>
+      <span class="era-tick"></span>
+    </div>
+    <div class="era-entry" data-target="winter-2026">
+      <span class="era-label-tag">Winter 2026</span>
+      <span class="era-tick"></span>
+    </div>
+    <div class="era-entry" data-target="winter-2025">
+      <span class="era-label-tag">Winter 2025</span>
+      <span class="era-tick"></span>
+    </div>
+    <div class="era-entry" data-target="fall-2025">
+      <span class="era-label-tag">Fall 2025</span>
+      <span class="era-tick"></span>
+    </div>
   </nav>
 
-  <main class="home-main">
-    <div class="pixel-name" id="pixelName" data-text="JOY S.">JOY S.</div>
-    <p class="bio-text">
-      A dry, observant, tool-pilled in a practical way, and just self-aware
-      enough to admit he's become the sort of product designer who tells
-      people what's wrong with their apps at dinner parties.
-    </p>
+  <!-- Main scrollable -->
+  <main class="site-main" id="siteMain">
+
+    <!-- NOW -->
+    <section class="era-section" id="now">
+      <div class="hero-text-block">
+        <h1 class="display-heading">I ACTED &amp; BEHOLD,<br>SERVICE IS JOY</h1>
+        <p class="hero-bio">
+          A dry, observant, tool-pilled in a practical way, and just self-aware
+          enough to admit he's become the sort of product designer who tells
+          people what's wrong with their apps at dinner parties.
+        </p>
+      </div>
+
+      <!-- Floating browser art frames -->
+      <div class="art-stage" aria-hidden="true">
+
+        <!-- F1: tall, blue jacket -->
+        <div class="browser-frame f1">
+          <div class="b-chrome">
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+          </div>
+          <div class="b-body" data-label="image coming soon"></div>
+        </div>
+
+        <!-- F2: small pink, top right -->
+        <div class="browser-frame f2">
+          <div class="b-chrome">
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+          </div>
+          <div class="b-body" data-label="image coming soon"></div>
+        </div>
+
+        <!-- F3: green, Egyptian art -->
+        <div class="browser-frame f3">
+          <div class="b-chrome">
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+          </div>
+          <div class="b-body" data-label="image coming soon"></div>
+        </div>
+
+        <!-- F4: orange, face portrait -->
+        <div class="browser-frame f4">
+          <div class="b-chrome">
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+          </div>
+          <div class="b-body" data-label="image coming soon"></div>
+        </div>
+
+        <!-- F5: yellow, clock -->
+        <div class="browser-frame f5">
+          <div class="b-chrome">
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+          </div>
+          <div class="b-body" data-label="image coming soon"></div>
+        </div>
+
+        <!-- F6: yellow, colorful/scream -->
+        <div class="browser-frame f6">
+          <div class="b-chrome">
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+            <span class="b-dot"></span>
+          </div>
+          <div class="b-body" data-label="image coming soon"></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SPRING 2026 -->
+    <section class="era-section" id="spring-2026">
+      <div class="era-inner">
+        <span class="era-season">Spring 2026</span>
+        <p class="era-note">Content and images coming soon.</p>
+        <div class="era-dot-row">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WINTER 2026 -->
+    <section class="era-section" id="winter-2026">
+      <div class="era-inner">
+        <span class="era-season">Winter 2026</span>
+        <p class="era-note">Content and images coming soon.</p>
+        <div class="era-dot-row">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- WINTER 2025 -->
+    <section class="era-section" id="winter-2025">
+      <div class="era-inner">
+        <span class="era-season">Winter 2025</span>
+        <p class="era-note">Content and images coming soon.</p>
+        <div class="era-dot-row">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- FALL 2025 -->
+    <section class="era-section" id="fall-2025">
+      <div class="era-inner">
+        <span class="era-season">Fall 2025</span>
+        <p class="era-note">Content and images coming soon.</p>
+        <div class="era-dot-row">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+    </section>
+
   </main>
 
   <script src="script.js"></script>

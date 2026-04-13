@@ -1,327 +1,520 @@
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;1,8..60,300;1,8..60,400&display=swap');
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+@font-face {
+  font-family: 'APK Praktikal';
+  src: url('APK-Praktikal-Book-Trial.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
 }
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg: #0a0a0a;
-  --fg: #e8e8e8;
-  --accent: #d4d4d4;
+  --bg:    #111010;
+  --fg:    #f2ede6;
   --muted: #555;
-  --nav-width: 90px;
+  --dim:   #363636;
+  --tl-w:  64px;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
+html { scroll-behavior: smooth; }
+
+body {
   background: var(--bg);
   color: var(--fg);
-  font-family: 'Space Mono', monospace;
+  font-family: 'APK Praktikal', monospace;
   overflow: hidden;
+  height: 100vh;
 }
 
-/* ─── PIXEL CANVAS BACKGROUND ─── */
-#pixelCanvas {
+/* ─── SITE HEADER ─── */
+.site-header {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.35;
-}
-
-/* ─── HEADER ─── */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 56px;
+  top: 0; left: 0; right: 0;
+  height: 60px;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  pointer-events: none;
 }
 
-.header-title {
-  font-family: 'Space Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--accent);
-  opacity: 0.7;
-}
-
-.header-circle {
-  position: absolute;
-  right: 28px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
+.logo-badge {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #c8c8c8;
+  border: 1.5px solid rgba(255,255,255,0.15);
+  background: var(--fg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
   cursor: pointer;
-  transition: background 0.2s;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.header-circle:hover {
-  background: #fff;
+.logo-badge svg {
+  width: 26px;
+  height: 26px;
 }
 
-/* ─── LEFT NAV ─── */
-.left-nav {
+/* browser-tab decoration top-right */
+.tab-deco {
   position: fixed;
-  left: 0;
-  top: 56px;
-  bottom: 0;
-  width: var(--nav-width);
+  top: 0; right: 36px;
+  background: #252525;
+  border-radius: 0 0 9px 9px;
+  padding: 11px 18px 9px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  z-index: 100;
+}
+.tab-deco i {
+  display: block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #444;
+}
+
+/* ─── LEFT TIMELINE ─── */
+.timeline-nav {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--tl-w);
+  z-index: 50;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 18px;
-  padding: 0 0 0 18px;
-  z-index: 10;
+  padding-left: 20px;
+  gap: 0;
 }
 
-.nav-item {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-  position: relative;
+.era-entry {
   cursor: pointer;
+  padding: 5px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
 }
 
-.nav-item::before {
-  content: '';
-  position: absolute;
-  left: -12px;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 4px;
-  height: 4px;
-  background: transparent;
-  transition: background 0.2s;
-}
-
-.nav-item:hover,
-.nav-item.active {
+.era-entry .era-label-tag {
+  font-family: 'APK Praktikal', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
   color: var(--fg);
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.35s ease;
+  white-space: nowrap;
+  line-height: 1.3;
 }
 
-.nav-item.active::before {
+.era-entry.active .era-label-tag {
+  max-height: 20px;
+  opacity: 1;
+  margin-bottom: 5px;
+}
+
+.era-tick {
+  display: block;
+  width: 18px;
+  height: 1.5px;
+  background: var(--dim);
+  transition: width 0.3s, background 0.3s;
+}
+
+.era-entry.active .era-tick {
+  width: 26px;
   background: var(--fg);
 }
 
-/* ─── HOME PAGE ─── */
-.home-main {
-  position: fixed;
-  top: 56px;
-  left: var(--nav-width);
-  right: 0;
-  bottom: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 56px;
-  z-index: 5;
+.era-entry:hover .era-tick {
+  background: #888;
 }
 
-.pixel-name {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(40px, 8vw, 80px);
-  color: var(--fg);
-  letter-spacing: 0.08em;
-  line-height: 1;
+/* ─── SCROLL CONTAINER ─── */
+.site-main {
+  position: fixed;
+  top: 0;
+  left: var(--tl-w);
+  right: 0;
+  bottom: 0;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+/* hide scrollbar */
+.site-main::-webkit-scrollbar { display: none; }
+.site-main { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ─── ERA SECTIONS ─── */
+.era-section {
   position: relative;
+  width: 100%;
+  height: 100vh;
+  scroll-snap-align: start;
+  overflow: hidden;
+}
+
+/* ─── NOW SECTION ─── */
+#now {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.hero-text-block {
+  position: relative;
+  z-index: 5;
+  padding-left: 60px;
+  margin-top: -20px;
+}
+
+.display-heading {
+  font-family: 'APK Praktikal', monospace;
+  font-size: clamp(38px, 5.5vw, 80px);
+  line-height: 1.12;
+  color: var(--fg);
+  letter-spacing: 0.025em;
+  text-transform: uppercase;
+  font-weight: 400;
+  max-width: 58vw;
+}
+
+.hero-bio {
+  font-family: 'Source Serif 4', serif;
+  font-size: 11px;
+  line-height: 1.9;
+  color: var(--fg);
+  opacity: 0.5;
+  max-width: 360px;
+  margin-top: 72px;
+  font-style: italic;
+}
+
+/* ─── ART STAGE ─── */
+.art-stage {
+  position: absolute;
+  top: 0; right: 0;
+  width: 72%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ─── BROWSER FRAMES ─── */
+.browser-frame {
+  position: absolute;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 18px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05);
+  pointer-events: all;
   cursor: default;
+  transition: box-shadow 0.25s ease;
+}
+
+.browser-frame:hover {
+  box-shadow: 0 28px 64px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.1);
+  z-index: 30 !important;
+}
+
+.b-chrome {
+  padding: 9px 11px 8px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.b-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.3);
+  flex-shrink: 0;
+}
+
+.b-body {
+  display: block;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+/* placeholder label shown until real images are added */
+.b-body::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: 8px; left: 10px;
+  font-family: 'APK Praktikal', monospace;
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.18);
+  pointer-events: none;
+}
+
+/* chrome colors */
+.f1 .b-chrome { background: #4B6EE6; }
+.f2 .b-chrome { background: #C95E8A; }
+.f3 .b-chrome { background: #3AB356; }
+.f4 .b-chrome { background: #E8703A; }
+.f5 .b-chrome { background: #F0C234; }
+.f6 .b-chrome { background: #F0C234; }
+
+/* ── frame 1: tall, blue jacket portrait ── */
+.f1 {
+  width: 23%;
+  right: -1%;
+  top: 3%;
+  z-index: 10;
+  transform: rotate(-1deg);
+}
+.f1 .b-body {
+  height: 54vh;
+  background: linear-gradient(175deg, #d0c1a8 0%, #b8a48c 60%, #a89070 100%);
+}
+
+/* ── frame 2: small, pink, top-right ── */
+.f2 {
+  width: 16%;
+  right: 24%;
+  top: 1.5%;
+  z-index: 8;
+  transform: rotate(1.5deg);
+}
+.f2 .b-body {
+  height: 13vh;
+  background: linear-gradient(160deg, #c8a882 0%, #b89065 100%);
+}
+
+/* ── frame 3: green, Egyptian/ancient ── */
+.f3 {
+  width: 27%;
+  right: 22%;
+  top: 30%;
+  z-index: 12;
+  transform: rotate(0.4deg);
+}
+.f3 .b-body {
+  height: 26vh;
+  background: linear-gradient(140deg, #c8a020 0%, #b08810 40%, #906808 100%);
+}
+
+/* ── frame 4: orange, face portrait ── */
+.f4 {
+  width: 22%;
+  right: 3%;
+  top: 46%;
+  z-index: 11;
+  transform: rotate(-1.2deg);
+}
+.f4 .b-body {
+  height: 32vh;
+  background: linear-gradient(160deg, #c49080 0%, #a87060 50%, #8c5040 100%);
+}
+
+/* ── frame 5: yellow, clock ── */
+.f5 {
+  width: 20%;
+  right: 26%;
+  top: 62%;
+  z-index: 9;
+  transform: rotate(1.8deg);
+}
+.f5 .b-body {
+  height: 26vh;
+  background: linear-gradient(150deg, #8c7254 0%, #7a6040 50%, #604830 100%);
+}
+
+/* ── frame 6: yellow, colorful / scream ── */
+.f6 {
+  width: 22%;
+  right: 5%;
+  top: 76%;
+  z-index: 7;
+  transform: rotate(-0.8deg);
+}
+.f6 .b-body {
+  height: 24vh;
+  background:
+    linear-gradient(to bottom,
+      #4B6EE6 0%   , #4B6EE6 16%,
+      #F0C234 16%  , #F0C234 34%,
+      #E8703A 34%  , #E8703A 52%,
+      #4B6EE6 52%  , #4B6EE6 70%,
+      #c0c0c0 70%  , #c0c0c0 85%,
+      #d4c4a8 85%  , #d4c4a8 100%
+    );
+}
+
+/* ─── OTHER ERA SECTIONS ─── */
+.era-inner {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 60px;
+  gap: 20px;
+}
+
+.era-season {
+  font-family: 'APK Praktikal', monospace;
+  font-size: clamp(28px, 3.8vw, 56px);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--fg);
+  opacity: 0.12;
+  line-height: 1;
   user-select: none;
 }
 
-.bio-text {
-  font-family: 'Space Mono', monospace;
-  font-size: 11px;
-  line-height: 1.9;
-  color: var(--accent);
-  opacity: 0.75;
-  max-width: 340px;
-  text-align: center;
+.era-note {
+  font-family: 'Source Serif 4', serif;
+  font-size: 12px;
+  font-style: italic;
+  color: var(--muted);
+  max-width: 320px;
+  line-height: 1.8;
+}
+
+.era-dot-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.era-dot-row span {
+  display: block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--dim);
 }
 
 /* ─── BLOG PAGE ─── */
-.blog-main {
+.blog-wrap {
   position: fixed;
-  top: 56px;
-  left: var(--nav-width);
+  top: 60px;
+  left: var(--tl-w);
   right: 0;
   bottom: 0;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  z-index: 5;
   overflow-y: auto;
 }
 
 .article-list {
   display: flex;
   flex-direction: column;
-  gap: 0;
   width: 100%;
-  max-width: 420px;
+  max-width: 500px;
+  padding: 40px 0;
 }
 
 .article-link {
-  font-family: 'Space Mono', monospace;
+  font-family: 'Source Serif 4', serif;
   font-size: 13px;
-  color: var(--accent);
+  font-style: italic;
+  color: var(--fg);
+  opacity: 0.55;
   text-decoration: none;
-  padding: 14px 0;
-  border-bottom: 1px solid #1a1a1a;
-  transition: color 0.15s, padding-left 0.15s;
-  letter-spacing: 0.04em;
-  opacity: 0.8;
-  cursor: pointer;
+  padding: 13px 0;
+  border-bottom: 1px solid #1c1c1c;
+  letter-spacing: 0.01em;
+  transition: opacity 0.2s, padding-left 0.2s;
+  display: block;
 }
 
-.article-link:first-child {
-  border-top: 1px solid #1a1a1a;
-}
+.article-link:first-child { border-top: 1px solid #1c1c1c; }
 
 .article-link:hover {
-  color: #fff;
-  padding-left: 8px;
   opacity: 1;
+  padding-left: 10px;
 }
 
 /* ─── ARTICLE PAGE ─── */
-.article-main {
+.article-wrap {
   position: fixed;
-  top: 56px;
-  left: var(--nav-width);
+  top: 60px;
+  left: var(--tl-w);
   right: 0;
   bottom: 0;
   overflow-y: auto;
-  padding: 48px 80px;
-  z-index: 5;
+  padding: 52px 80px;
 }
 
 .article-back {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
+  font-family: 'APK Praktikal', monospace;
+  font-size: 8.5px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--muted);
   text-decoration: none;
-  margin-bottom: 48px;
   display: inline-block;
+  margin-bottom: 52px;
   transition: color 0.2s;
 }
 
-.article-back:hover {
-  color: var(--fg);
-}
+.article-back:hover { color: var(--fg); }
 
 .article-title {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 18px;
-  line-height: 1.6;
+  font-family: 'APK Praktikal', monospace;
+  font-size: clamp(18px, 2.4vw, 30px);
+  line-height: 1.4;
   color: var(--fg);
-  margin-bottom: 32px;
-  max-width: 560px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  max-width: 580px;
+  margin-bottom: 28px;
+  font-weight: 400;
 }
 
-.article-meta {
-  font-family: 'Space Mono', monospace;
-  font-size: 9px;
-  color: var(--muted);
-  letter-spacing: 0.12em;
+.article-date {
+  font-family: 'APK Praktikal', monospace;
+  font-size: 8px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  margin-bottom: 48px;
+  color: var(--muted);
+  margin-bottom: 52px;
 }
 
 .article-body {
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
+  font-family: 'Source Serif 4', serif;
+  font-size: 13px;
   line-height: 2;
-  color: var(--accent);
-  opacity: 0.8;
-  max-width: 600px;
+  color: var(--fg);
+  opacity: 0.7;
+  max-width: 580px;
 }
 
-.article-body p {
-  margin-bottom: 24px;
+.article-body p { margin-bottom: 26px; }
+
+/* ─── SHARED BLOG/ARTICLE NAV ─── */
+.page-left-nav {
+  position: fixed;
+  left: 0; top: 0; bottom: 0;
+  width: var(--tl-w);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 20px;
+  gap: 18px;
+  z-index: 50;
 }
 
-/* ─── GLITCH ANIMATION ─── */
-@keyframes glitch-clip-1 {
-  0%   { clip-path: inset(40% 0 61% 0); transform: translate(-4px, 0); }
-  20%  { clip-path: inset(92% 0 1% 0);  transform: translate(4px, 0); }
-  40%  { clip-path: inset(43% 0 1% 0);  transform: translate(0, 0); }
-  60%  { clip-path: inset(25% 0 58% 0); transform: translate(3px, 0); }
-  80%  { clip-path: inset(54% 0 7% 0);  transform: translate(-3px, 0); }
-  100% { clip-path: inset(58% 0 43% 0); transform: translate(0, 0); }
+.page-nav-item {
+  font-family: 'APK Praktikal', monospace;
+  font-size: 8.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
 }
 
-@keyframes glitch-clip-2 {
-  0%   { clip-path: inset(24% 0 29% 0); transform: translate(4px, 0); }
-  20%  { clip-path: inset(54% 0 7% 0);  transform: translate(-4px, 0); }
-  40%  { clip-path: inset(5% 0 86% 0);  transform: translate(3px, 0); }
-  60%  { clip-path: inset(35% 0 56% 0); transform: translate(0, 0); }
-  80%  { clip-path: inset(74% 0 16% 0); transform: translate(-3px, 0); }
-  100% { clip-path: inset(45% 0 40% 0); transform: translate(4px, 0); }
-}
-
-.pixel-name {
-  position: relative;
-}
-
-.pixel-name::before,
-.pixel-name::after {
-  content: attr(data-text);
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%;
-  font-family: 'Press Start 2P', monospace;
-  font-size: inherit;
-  letter-spacing: inherit;
-  opacity: 0;
-}
-
-.pixel-name.glitching::before {
-  color: #ff004c;
-  opacity: 0.8;
-  animation: glitch-clip-1 0.3s steps(1) infinite;
-}
-
-.pixel-name.glitching::after {
-  color: #00ffe7;
-  opacity: 0.8;
-  animation: glitch-clip-2 0.3s steps(1) infinite;
-}
-
-/* ─── PIXEL CURSOR (optional flair) ─── */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-.cursor {
-  display: inline-block;
-  width: 10px;
-  height: 1em;
-  background: var(--fg);
-  margin-left: 4px;
-  vertical-align: middle;
-  animation: blink 1s step-end infinite;
-}
+.page-nav-item:hover,
+.page-nav-item.active { color: var(--fg); }

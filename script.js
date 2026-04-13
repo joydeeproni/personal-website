@@ -1,141 +1,76 @@
 /* ─────────────────────────────────────────────
-   PIXEL PARTICLE BACKGROUND
+   TIMELINE SCROLL TRACKING
    ───────────────────────────────────────────── */
 
-const canvas = document.getElementById('pixelCanvas');
-const ctx = canvas.getContext('2d');
+const main    = document.getElementById('siteMain');
+const navEl   = document.getElementById('timelineNav');
+const entries = navEl ? [...navEl.querySelectorAll('.era-entry')] : [];
+const sections = main ? [...main.querySelectorAll('.era-section')] : [];
 
-let W, H;
-const PIXEL_SIZE = 4;
-const particles = [];
-const PARTICLE_COUNT = 60;
-
-function resize() {
-  W = canvas.width  = window.innerWidth;
-  H = canvas.height = window.innerHeight;
-}
-resize();
-window.addEventListener('resize', resize);
-
-class Pixel {
-  constructor() { this.reset(true); }
-
-  reset(initial = false) {
-    this.x     = Math.random() * W;
-    this.y     = initial ? Math.random() * H : H + PIXEL_SIZE;
-    this.vx    = (Math.random() - 0.5) * 0.4;
-    this.vy    = -(Math.random() * 0.5 + 0.2);
-    this.life  = 0;
-    this.maxLife = 200 + Math.random() * 300;
-    this.size  = PIXEL_SIZE * (Math.random() < 0.3 ? 2 : 1);
-    this.alpha = 0;
-  }
-
-  update() {
-    this.life++;
-    this.x += this.vx;
-    this.y += this.vy;
-
-    const t = this.life / this.maxLife;
-    // fade in for first 20%, hold, fade out last 20%
-    if (t < 0.2)       this.alpha = t / 0.2;
-    else if (t > 0.8)  this.alpha = (1 - t) / 0.2;
-    else               this.alpha = 1;
-
-    if (this.life >= this.maxLife || this.y < -PIXEL_SIZE) this.reset();
-  }
-
-  draw() {
-    ctx.globalAlpha = this.alpha * 0.5;
-    ctx.fillStyle = '#ffffff';
-    ctx.fillRect(
-      Math.round(this.x / PIXEL_SIZE) * PIXEL_SIZE,
-      Math.round(this.y / PIXEL_SIZE) * PIXEL_SIZE,
-      this.size, this.size
-    );
-  }
-}
-
-for (let i = 0; i < PARTICLE_COUNT; i++) particles.push(new Pixel());
-
-/* ─── scanline overlay ─── */
-function drawScanlines() {
-  ctx.globalAlpha = 0.03;
-  ctx.fillStyle = '#000';
-  for (let y = 0; y < H; y += 4) {
-    ctx.fillRect(0, y, W, 2);
-  }
-}
-
-function loop() {
-  ctx.clearRect(0, 0, W, H);
-  particles.forEach(p => { p.update(); p.draw(); });
-  drawScanlines();
-  ctx.globalAlpha = 1;
-  requestAnimationFrame(loop);
-}
-loop();
-
-/* ─────────────────────────────────────────────
-   GLITCH EFFECT ON NAME (home page only)
-   ───────────────────────────────────────────── */
-
-const nameEl = document.getElementById('pixelName');
-if (nameEl) {
-  // Trigger glitch randomly
-  function triggerGlitch() {
-    nameEl.classList.add('glitching');
-    const duration = 200 + Math.random() * 400;
-    setTimeout(() => nameEl.classList.remove('glitching'), duration);
-    // schedule next
-    setTimeout(triggerGlitch, 2000 + Math.random() * 5000);
-  }
-  setTimeout(triggerGlitch, 1200);
-
-  // Also brief glitch on hover
-  nameEl.addEventListener('mouseenter', () => {
-    nameEl.classList.add('glitching');
+// Click on timeline entry → scroll to section
+entries.forEach(entry => {
+  entry.addEventListener('click', () => {
+    const target = document.getElementById(entry.dataset.target);
+    if (target) target.scrollIntoView({ behavior: 'smooth' });
   });
-  nameEl.addEventListener('mouseleave', () => {
-    setTimeout(() => nameEl.classList.remove('glitching'), 300);
-  });
+});
+
+// IntersectionObserver to update active timeline entry
+if (main && sections.length) {
+  const observer = new IntersectionObserver(
+    (obs) => {
+      obs.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          entries.forEach(e => {
+            e.classList.toggle('active', e.dataset.target === id);
+          });
+        }
+      });
+    },
+    { root: main, threshold: 0.5 }
+  );
+  sections.forEach(s => observer.observe(s));
 }
 
 /* ─────────────────────────────────────────────
-   TYPEWRITER INTRO for bio text (home page only)
+   SUBTLE PARALLAX ON ART FRAMES
    ───────────────────────────────────────────── */
 
-const bioEl = document.querySelector('.bio-text');
-if (bioEl) {
-  const original = bioEl.textContent.trim();
-  bioEl.textContent = '';
-  bioEl.style.opacity = '0.75';
+const frames = document.querySelectorAll('.browser-frame');
 
-  let i = 0;
-  function type() {
-    if (i <= original.length) {
-      bioEl.textContent = original.slice(0, i);
-      i++;
-      setTimeout(type, 18 + Math.random() * 12);
-    }
-  }
-  // start after a beat
-  setTimeout(type, 600);
-}
+document.addEventListener('mousemove', (e) => {
+  const cx = window.innerWidth  / 2;
+  const cy = window.innerHeight / 2;
+  const dx = (e.clientX - cx) / cx; // -1 to +1
+  const dy = (e.clientY - cy) / cy;
+
+  frames.forEach((frame, i) => {
+    const depth = 0.4 + (i % 3) * 0.25; // different depths
+    const tx = dx * 6 * depth;
+    const ty = dy * 4 * depth;
+    const baseRot = parseFloat(frame.style.getPropertyValue('--base-rot') || 0);
+    frame.style.transform = `rotate(${baseRot}deg) translate(${tx}px, ${ty}px)`;
+  });
+});
+
+// Store base rotations
+frames.forEach(frame => {
+  const match = frame.style.transform?.match(/rotate\(([^)]+)deg\)/);
+  if (match) frame.style.setProperty('--base-rot', match[1]);
+});
 
 /* ─────────────────────────────────────────────
-   ARTICLE LIST staggered fade-in (blog page only)
+   ARTICLE LIST STAGGER (blog page)
    ───────────────────────────────────────────── */
 
-const articleLinks = document.querySelectorAll('.article-link');
-if (articleLinks.length) {
-  articleLinks.forEach((el, idx) => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(6px)';
-    el.style.transition = 'opacity 0.35s ease, transform 0.35s ease, color 0.15s, padding-left 0.15s';
-    setTimeout(() => {
-      el.style.opacity = '0.8';
-      el.style.transform = 'translateY(0)';
-    }, 80 + idx * 60);
-  });
-}
+const links = document.querySelectorAll('.article-link');
+links.forEach((el, i) => {
+  el.style.opacity = '0';
+  el.style.transform = 'translateY(8px)';
+  el.style.transition = 'opacity 0.4s ease, transform 0.4s ease, padding-left 0.2s, opacity 0.2s';
+  setTimeout(() => {
+    el.style.opacity = '0.55';
+    el.style.transform = 'translateY(0)';
+  }, 60 + i * 55);
+});

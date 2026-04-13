@@ -3,27 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thoughts — Joy S</title>
+  <title>Thoughts — Joy S.</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-  <canvas id="pixelCanvas"></canvas>
-
-  <header>
-    <div class="header-title">This is not a portfolio</div>
-    <div class="header-circle"></div>
+  <header class="site-header">
+    <a href="index.html" class="logo-badge">
+      <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <text x="4" y="19" font-size="14" font-family="serif" fill="#111" font-style="italic">JS</text>
+      </svg>
+    </a>
   </header>
 
-  <nav class="left-nav">
-    <a href="index.html" class="nav-item">Values</a>
-    <a href="#" class="nav-item">Contact</a>
-    <a href="#" class="nav-item">Work</a>
-    <a href="blog.html" class="nav-item active">Thoughts</a>
-    <a href="#" class="nav-item">Ones</a>
+  <div class="tab-deco" aria-hidden="true">
+    <i></i><i></i><i></i>
+  </div>
+
+  <nav class="page-left-nav">
+    <a href="index.html" class="page-nav-item">Home</a>
+    <a href="blog.html" class="page-nav-item active">Thoughts</a>
   </nav>
 
-  <main class="blog-main">
+  <div class="blog-wrap">
     <div class="article-list">
       <a class="article-link" href="article.html?id=1">Designers don't need to code, until they do</a>
       <a class="article-link" href="article.html?id=2">On being wrong loudly and often</a>
@@ -35,7 +37,7 @@
       <a class="article-link" href="article.html?id=8">Self-awareness as a design skill</a>
       <a class="article-link" href="article.html?id=9">The myth of the objective user</a>
     </div>
-  </main>
+  </div>
 
   <script src="script.js"></script>
 </body>
