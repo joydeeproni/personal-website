@@ -50,15 +50,51 @@
     <!-- NOW -->
     <section class="era-section" id="now">
 
-      <!-- Art frames — full bleed behind text -->
+      <!-- Art frames — CSS component, swap .b-placeholder for <img class="b-image"> when raw image is ready -->
       <div class="art-stage" aria-hidden="true">
-        <img class="art-frame af1" src="img-jacket.png"   alt="">
-        <img class="art-frame af2" src="img-eraser.png"   alt="">
-        <img class="art-frame af3" src="img-ethiopian.png" alt="">
-        <img class="art-frame af4" src="img-portrait.png" alt="">
-        <img class="art-frame af5" src="img-clock.png"    alt="">
-        <img class="art-frame af6" src="img-stripes.png"  alt="">
-        <img class="art-frame af7" src="img-scream.png"   alt="">
+
+        <!-- 1: Blue jacket — blue chrome -->
+        <div class="browser-frame af1" style="--chrome: #4B6EE6;">
+          <div class="b-chrome"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-jacket-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:2/3;--ph:#c4b496'}))">
+        </div>
+
+        <!-- 2: Pink eraser — pink chrome -->
+        <div class="browser-frame af2" style="--chrome: #C95E8A;">
+          <div class="b-chrome"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-eraser-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:3/2;--ph:#c8a090'}))">
+        </div>
+
+        <!-- 3: Ethiopian art — green chrome -->
+        <div class="browser-frame af3" style="--chrome: #3AB356;">
+          <div class="b-chrome"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-ethiopian-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:16/9;--ph:#b89040'}))">
+        </div>
+
+        <!-- 4: Portrait face — orange chrome -->
+        <div class="browser-frame af4" style="--chrome: #E8703A;">
+          <div class="b-chrome"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-portrait-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:3/4;--ph:#b87858'}))">
+        </div>
+
+        <!-- 5: Clock — yellow chrome -->
+        <div class="browser-frame af5" style="--chrome: #F0C234;">
+          <div class="b-chrome"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-clock-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:4/3;--ph:#8c7050'}))">
+        </div>
+
+        <!-- 6: Colorful stripes — light chrome + macOS coloured dots -->
+        <div class="browser-frame af6" style="--chrome: #e0e0e0;">
+          <div class="b-chrome b-chrome--macos"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-stripes-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:16/9;--ph:#c8a830'}))">
+        </div>
+
+        <!-- 7: The Scream — orange chrome -->
+        <div class="browser-frame af7" style="--chrome: #E8703A;">
+          <div class="b-chrome"><span class="b-dot"></span><span class="b-dot"></span><span class="b-dot"></span></div>
+          <img class="b-image" src="img-scream-raw.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'b-placeholder',style:'--ratio:4/3;--ph:#d4b880'}))">
+        </div>
+
       </div>
 
       <!-- Hero text centered over images -->

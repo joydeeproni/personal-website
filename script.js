@@ -37,7 +37,7 @@ if (main && sections.length) {
    SUBTLE PARALLAX ON ART FRAMES
    ───────────────────────────────────────────── */
 
-const frames = document.querySelectorAll('.art-frame');
+const frames = document.querySelectorAll('.browser-frame');
 
 // Read base rotations from computed styles (set via CSS class)
 const baseRots = [[-1],[2.5],[0.4],[-1.4],[1.8],[-2],[1]];

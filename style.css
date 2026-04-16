@@ -212,84 +212,79 @@ body {
   font-feature-settings: 'dlig' on, 'salt' on;
 }
 
-/* ─── ART FRAME IMAGES ─── */
-.art-frame {
+/* ─── BROWSER FRAME COMPONENT ─────────────────────────────────────────
+   Usage:
+     <div class="browser-frame af1" style="--chrome: #4B6EE6;">
+       <div class="b-chrome"><span class="b-dot"></span>×3</div>
+       <img class="b-image" src="painting.jpg" alt="">
+     </div>
+
+   • Set --chrome on the element to pick the bar colour.
+   • Drop any raw image in as .b-image — height stays auto,
+     so the frame wraps the image's natural aspect ratio.
+   • Use .b-placeholder (with --ratio and --ph vars) until
+     a real image is available.
+──────────────────────────────────────────────────────────────────── */
+
+.browser-frame {
   position: absolute;
   border-radius: 10px;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.04);
-  display: block;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05);
   pointer-events: all;
-  height: auto;
   transition: box-shadow 0.25s ease;
 }
 
-.art-frame:hover {
-  box-shadow: 0 28px 70px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.1);
+.browser-frame:hover {
+  box-shadow: 0 28px 70px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.12);
   z-index: 30 !important;
 }
 
-/* blue jacket — tall, far right */
-.af1 {
-  width: 20vw;
-  right: 1vw;
-  top: 3vh;
-  z-index: 10;
-  transform: rotate(-1deg);
+/* coloured chrome bar */
+.b-chrome {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 9px 11px;
+  background: var(--chrome, #555);
 }
 
-/* pink eraser — small, upper right */
-.af2 {
-  width: 15vw;
-  right: 22vw;
-  top: 2vh;
-  z-index: 8;
-  transform: rotate(2.5deg);
+/* traffic light dots — translucent white by default */
+.b-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.38);
+  flex-shrink: 0;
 }
 
-/* Ethiopian art — wide, center-right */
-.af3 {
-  width: 27vw;
-  right: 20vw;
-  top: 36vh;
-  z-index: 12;
-  transform: rotate(0.4deg);
+/* macOS exact traffic light colours (opt-in) */
+.b-chrome--macos .b-dot:nth-child(1) { background: #FF5F57; }
+.b-chrome--macos .b-dot:nth-child(2) { background: #FEBC2E; }
+.b-chrome--macos .b-dot:nth-child(3) { background: #28C840; }
+
+/* painting image — full width, auto height = aspect ratio preserved */
+.b-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* portrait face — right, mid-lower */
-.af4 {
-  width: 21vw;
-  right: 2vw;
-  top: 48vh;
-  z-index: 11;
-  transform: rotate(-1.4deg);
+/* placeholder until real image is supplied */
+.b-placeholder {
+  width: 100%;
+  aspect-ratio: var(--ratio, 4/3);
+  background: var(--ph, #2a2a2a);
 }
 
-/* clock — lower right */
-.af5 {
-  width: 19vw;
-  right: 24vw;
-  top: 62vh;
-  z-index: 9;
-  transform: rotate(1.8deg);
-}
-
-/* colorful stripes — upper right cluster */
-.af6 {
-  width: 22vw;
-  right: 43vw;
-  top: 6vh;
-  z-index: 7;
-  transform: rotate(-2deg);
-}
-
-/* The Scream — lower right */
-.af7 {
-  width: 21vw;
-  right: 4vw;
-  top: 70vh;
-  z-index: 9;
-  transform: rotate(1deg);
-}
+/* ── frame positions (right-side only) ── */
+.af1 { width: 20vw; right: 1vw;  top: 3vh;  z-index: 10; transform: rotate(-1deg);  }
+.af2 { width: 15vw; right: 22vw; top: 2vh;  z-index: 8;  transform: rotate(2.5deg); }
+.af3 { width: 27vw; right: 20vw; top: 36vh; z-index: 12; transform: rotate(0.4deg); }
+.af4 { width: 21vw; right: 2vw;  top: 48vh; z-index: 11; transform: rotate(-1.4deg);}
+.af5 { width: 19vw; right: 24vw; top: 62vh; z-index: 9;  transform: rotate(1.8deg); }
+.af6 { width: 22vw; right: 43vw; top: 6vh;  z-index: 7;  transform: rotate(-2deg);  }
+.af7 { width: 21vw; right: 4vw;  top: 70vh; z-index: 9;  transform: rotate(1deg);   }
 
 /* ─── OTHER ERA SECTIONS ─── */
 .era-inner {
