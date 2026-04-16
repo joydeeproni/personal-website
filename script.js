@@ -40,7 +40,7 @@ if (main && sections.length) {
 const frames = document.querySelectorAll('.browser-frame');
 
 // Read base rotations from computed styles (set via CSS class)
-const baseRots = [[-1],[2.5],[0.4],[-1.4],[1.8],[-2],[1]];
+const baseRots = [[-1],[2],[ 0.4],[-1.5],[1.8],[-2],[1],[-1.5],[1.5]];
 
 document.addEventListener('mousemove', (e) => {
   const cx = window.innerWidth  / 2;
