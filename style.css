@@ -236,14 +236,18 @@ body {
 
 .browser-frame {
   position: absolute;
-  border-radius: 16px;
-  overflow: hidden;
+  border-radius: 12px;
   border: 1px solid #7C7C7C;
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.06);
   pointer-events: all;
   transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  padding: 6px;
+}
+
+.browser-frame .b-image {
+  border-radius: 8px;
 }
 
 .browser-frame:hover {
