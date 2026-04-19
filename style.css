@@ -484,37 +484,28 @@ body {
 .page-nav-item.active { color: var(--fg); }
 
 /* ─── MOBILE ─────────────────────────────────────────────────────── */
+
+/* mobile-fold hidden on desktop */
+.mobile-fold { display: none !important; }
+
 @media (max-width: 768px) {
 
-  /* full page scrolls normally */
-  body {
-    overflow: auto;
-    height: auto;
-  }
-
-  .site-main {
-    position: static;
-    left: 0; right: 0; top: 0; bottom: auto;
-    overflow: visible;
-    scroll-snap-type: none;
-  }
+  /* keep snap scroll, just remove timeline offset */
+  .site-main { left: 0; }
 
   /* hide left timeline */
   .timeline-nav { display: none; }
 
-  /* sections: natural height, no snap */
-  .era-section {
-    height: auto;
-    min-height: auto;
-    overflow: visible;
-    scroll-snap-align: none;
-  }
+  /* hide floating desktop frames */
+  .art-stage { display: none; }
 
-  /* ── NOW section: column order text → masonry → bio ── */
-  #now {
+  /* ── text sections: flex-center content ── */
+  .era-section {
     display: flex;
     flex-direction: column;
-    padding-top: 72px;
+    justify-content: center;
+    align-items: center;
+    padding: 0 0 0 0;
   }
 
   .hero-text-block {
@@ -522,8 +513,7 @@ body {
     transform: none;
     width: 100%;
     text-align: center;
-    padding: 40px 20px 28px;
-    order: 1;
+    padding: 20px 24px 16px;
     pointer-events: auto;
     animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
   }
@@ -533,74 +523,59 @@ body {
     max-width: 100%;
   }
 
-  /* art-stage becomes masonry container */
-  .art-stage {
-    position: static;
-    width: 100%;
-    height: auto;
-    columns: 2;
-    column-gap: 10px;
-    padding: 0 16px;
-    order: 2;
-  }
-
-  /* each frame: static, full column width, masonry stack */
-  .browser-frame {
-    position: static !important;
-    width: 100% !important;
-    right: auto !important;
-    top: auto !important;
-    z-index: auto !important;
-    transform: none !important;
-    animation: fadeIn 0.6s ease both !important;
-    break-inside: avoid;
-    display: block;
-    margin-bottom: 10px;
-  }
-
-  /* stagger the masonry items */
-  .af1 { animation-delay: 0.10s !important; }
-  .af2 { animation-delay: 0.18s !important; }
-  .af3 { animation-delay: 0.26s !important; }
-  .af4 { animation-delay: 0.34s !important; }
-  .af5 { animation-delay: 0.42s !important; }
-  .af6 { animation-delay: 0.50s !important; }
-  .af7 { animation-delay: 0.58s !important; }
-  .af8 { animation-delay: 0.66s !important; }
-  .af9 { animation-delay: 0.74s !important; }
-
-  /* bio after masonry */
   .hero-bio {
     position: static;
     transform: none;
     width: 100%;
-    padding: 28px 24px 52px;
+    padding: 16px 24px 0;
     text-align: center;
-    order: 3;
     animation: bioIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
   }
 
-  /* ── other era sections ── */
-  .era-section:not(#now) {
-    padding: 64px 0 48px;
+  /* ── mobile image fold: snap section, inner scroll for masonry ── */
+  .mobile-fold {
+    display: block !important;
+    height: 100vh;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-align: start;
   }
 
-  .era-section:not(#now) .hero-text-block {
-    position: static;
-    transform: none;
-    width: 100%;
-    text-align: center;
-    padding: 0 20px 24px;
-    pointer-events: auto;
-    animation: none;
+  .mobile-masonry {
+    columns: 2;
+    column-gap: 10px;
+    padding: 16px;
   }
 
-  .era-section:not(#now) .hero-bio {
-    position: static;
-    transform: none;
+  /* frosted glass frame — static, masonry flow */
+  .m-frame {
+    border-radius: 12px;
+    border: 1px solid #7C7C7C;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    background: rgba(255, 255, 255, 0.06);
+    padding: 8px;
+    break-inside: avoid;
+    display: block;
+    margin-bottom: 10px;
+    animation: fadeIn 0.5s ease both;
+  }
+
+  .m-frame:nth-child(1) { animation-delay: 0.05s; }
+  .m-frame:nth-child(2) { animation-delay: 0.12s; }
+  .m-frame:nth-child(3) { animation-delay: 0.19s; }
+  .m-frame:nth-child(4) { animation-delay: 0.26s; }
+  .m-frame:nth-child(5) { animation-delay: 0.33s; }
+  .m-frame:nth-child(6) { animation-delay: 0.40s; }
+  .m-frame:nth-child(7) { animation-delay: 0.47s; }
+  .m-frame:nth-child(8) { animation-delay: 0.54s; }
+  .m-frame:nth-child(9) { animation-delay: 0.61s; }
+
+  .m-frame img {
+    display: block;
     width: 100%;
-    padding: 0 24px;
-    text-align: center;
-    animation: none;
+    height: auto;
+    border-radius: 4px;
   }
 }
