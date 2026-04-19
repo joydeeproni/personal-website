@@ -224,69 +224,39 @@ body {
   font-feature-settings: 'dlig' on, 'salt' on;
 }
 
-/* ─── BROWSER FRAME COMPONENT ─────────────────────────────────────────
+/* ─── ART FRAME COMPONENT ─────────────────────────────────────────
    Usage:
-     <div class="browser-frame af1" style="--chrome: #4B6EE6;">
-       <div class="b-chrome"><span class="b-dot"></span>×3</div>
+     <div class="browser-frame af1">
        <img class="b-image" src="painting.jpg" alt="">
      </div>
 
-   • Set --chrome on the element to pick the bar colour.
-   • Drop any raw image in as .b-image — height stays auto,
-     so the frame wraps the image's natural aspect ratio.
-   • Use .b-placeholder (with --ratio and --ph vars) until
-     a real image is available.
+   • No chrome bar — clean frosted glass border frame.
+   • Drop any raw image in as .b-image — height auto preserves aspect ratio.
 ──────────────────────────────────────────────────────────────────── */
 
 .browser-frame {
   position: absolute;
-  border-radius: 10px;
+  border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.05);
+  border: 1px solid #7C7C7C;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.03);
   pointer-events: all;
-  transition: box-shadow 0.25s ease;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .browser-frame:hover {
-  box-shadow: 0 28px 70px rgba(0,0,0,0.8), 0 0 0 1px rgba(255,255,255,0.12);
+  border-color: #aaa;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
   z-index: 30 !important;
 }
-
-/* coloured chrome bar */
-.b-chrome {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  padding: 9px 11px;
-  background: var(--chrome, #555);
-}
-
-/* traffic light dots — translucent white by default */
-.b-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: rgba(255,255,255,0.38);
-  flex-shrink: 0;
-}
-
-/* macOS exact traffic light colours (opt-in) */
-.b-chrome--macos .b-dot:nth-child(1) { background: #FF5F57; }
-.b-chrome--macos .b-dot:nth-child(2) { background: #FEBC2E; }
-.b-chrome--macos .b-dot:nth-child(3) { background: #28C840; }
 
 /* painting image — full width, auto height = aspect ratio preserved */
 .b-image {
   display: block;
   width: 100%;
   height: auto;
-}
-
-/* placeholder until real image is supplied */
-.b-placeholder {
-  width: 100%;
-  aspect-ratio: var(--ratio, 4/3);
-  background: var(--ph, #2a2a2a);
 }
 
 /* ── frame positions (right-side only, all left-edges > 50vw) ── */
