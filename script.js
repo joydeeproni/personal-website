@@ -39,9 +39,6 @@ if (main && sections.length) {
 
 const frames = document.querySelectorAll('.browser-frame');
 
-// Read base rotations from computed styles (set via CSS class)
-const baseRots = [[-1],[2],[ 0.4],[-1.5],[1.8],[-2],[1],[-1.5],[1.5]];
-
 document.addEventListener('mousemove', (e) => {
   const cx = window.innerWidth  / 2;
   const cy = window.innerHeight / 2;
@@ -49,11 +46,11 @@ document.addEventListener('mousemove', (e) => {
   const dy = (e.clientY - cy) / cy;
 
   frames.forEach((frame, i) => {
+    const rot   = getComputedStyle(frame).getPropertyValue('--rot').trim() || '0deg';
     const depth = 0.35 + (i % 3) * 0.2;
-    const tx = dx * 7 * depth;
-    const ty = dy * 5 * depth;
-    const rot = baseRots[i] ? baseRots[i][0] : 0;
-    frame.style.transform = `rotate(${rot}deg) translate(${tx}px, ${ty}px)`;
+    const tx    = dx * 7 * depth;
+    const ty    = dy * 5 * depth;
+    frame.style.transform = `rotate(${rot}) translate(${tx}px, ${ty}px)`;
   });
 });
 
