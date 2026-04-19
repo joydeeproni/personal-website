@@ -482,3 +482,125 @@ body {
 
 .page-nav-item:hover,
 .page-nav-item.active { color: var(--fg); }
+
+/* ─── MOBILE ─────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* full page scrolls normally */
+  body {
+    overflow: auto;
+    height: auto;
+  }
+
+  .site-main {
+    position: static;
+    left: 0; right: 0; top: 0; bottom: auto;
+    overflow: visible;
+    scroll-snap-type: none;
+  }
+
+  /* hide left timeline */
+  .timeline-nav { display: none; }
+
+  /* sections: natural height, no snap */
+  .era-section {
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+    scroll-snap-align: none;
+  }
+
+  /* ── NOW section: column order text → masonry → bio ── */
+  #now {
+    display: flex;
+    flex-direction: column;
+    padding-top: 72px;
+  }
+
+  .hero-text-block {
+    position: static;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    padding: 40px 20px 28px;
+    order: 1;
+    pointer-events: auto;
+    animation: heroIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  }
+
+  .display-heading {
+    font-size: clamp(26px, 7.5vw, 42px);
+    max-width: 100%;
+  }
+
+  /* art-stage becomes masonry container */
+  .art-stage {
+    position: static;
+    width: 100%;
+    height: auto;
+    columns: 2;
+    column-gap: 10px;
+    padding: 0 16px;
+    order: 2;
+  }
+
+  /* each frame: static, full column width, masonry stack */
+  .browser-frame {
+    position: static !important;
+    width: 100% !important;
+    right: auto !important;
+    top: auto !important;
+    z-index: auto !important;
+    transform: none !important;
+    animation: fadeIn 0.6s ease both !important;
+    break-inside: avoid;
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  /* stagger the masonry items */
+  .af1 { animation-delay: 0.10s !important; }
+  .af2 { animation-delay: 0.18s !important; }
+  .af3 { animation-delay: 0.26s !important; }
+  .af4 { animation-delay: 0.34s !important; }
+  .af5 { animation-delay: 0.42s !important; }
+  .af6 { animation-delay: 0.50s !important; }
+  .af7 { animation-delay: 0.58s !important; }
+  .af8 { animation-delay: 0.66s !important; }
+  .af9 { animation-delay: 0.74s !important; }
+
+  /* bio after masonry */
+  .hero-bio {
+    position: static;
+    transform: none;
+    width: 100%;
+    padding: 28px 24px 52px;
+    text-align: center;
+    order: 3;
+    animation: bioIn 1s cubic-bezier(0.16, 1, 0.3, 1) 0.5s both;
+  }
+
+  /* ── other era sections ── */
+  .era-section:not(#now) {
+    padding: 64px 0 48px;
+  }
+
+  .era-section:not(#now) .hero-text-block {
+    position: static;
+    transform: none;
+    width: 100%;
+    text-align: center;
+    padding: 0 20px 24px;
+    pointer-events: auto;
+    animation: none;
+  }
+
+  .era-section:not(#now) .hero-bio {
+    position: static;
+    transform: none;
+    width: 100%;
+    padding: 0 24px;
+    text-align: center;
+    animation: none;
+  }
+}
